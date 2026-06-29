@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gizikita-v1';
+const CACHE_NAME = 'gizikita-v2';
 
 // Daftar file lokal Anda sesuai gambar struktur folder
 const LOCAL_ASSETS = [
