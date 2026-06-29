@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  
+
     <title>GiziKita - Smart Nutrition Planner untuk Balita, Posyandu & Pencegahan Stunting</title>
 
     <meta name="description"
@@ -141,76 +141,109 @@
         .nav-btn.active { color: #059669; }
         .nav-btn.active .nav-pill { background-color: #d1fae5; }
         .nav-btn.active i { font-weight: 700; }
+
+        /* --- KUSTOMISASI GOOGLE TRANSLATE --- */
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        body { top: 0px !important; }
+        #google_translate_element { 
+            z-index: 100; 
+            display: flex;
+            align-items: center;
+        }
+        .goog-te-gadget-simple {
+            background-color: rgba(51, 65, 85, 0.5) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 0.5rem !important;
+            padding: 0 10px !important;
+            height: 34px !important;
+            display: flex !important;
+            align-items: center;
+            backdrop-filter: blur(8px);
+            cursor: pointer;
+        }
+        .goog-te-menu-value {
+            display: flex !important;
+            align-items: center !important;
+        }
+        
+        /* 1. PAKSA SEMUA WARNA TEKS JADI PUTIH BERSIH */
+        .goog-te-gadget-simple, 
+        .goog-te-gadget-simple a, 
+        .goog-te-gadget-simple span {
+            color: #ffffff !important; 
+        }
+
+        /* 2. FORMAT TEKS UTAMA (PILIH BAHASA) AGAR TEGAS & JELAS */
+        .goog-te-gadget-simple .goog-te-menu-value span:first-child { 
+            font-size: 11px !important; 
+            font-weight: 600 !important;
+            font-family: 'Inter', sans-serif !important;
+            letter-spacing: 0.02em;
+        }
+        
+        /* 3. SEMBUNYIKAN LOGO GOOGLE */
+        .goog-te-gadget-simple img { display: none !important; }
+        
+        /* 4. HANCURKAN GARIS SEPARATOR VERTIKAL BAWAAN GOOGLE */
+        .goog-te-gadget-simple .goog-te-menu-value span {
+            border-left: none !important;
+            border-right: none !important;
+        }
+        
+        /* 5. PANAH DROPDOWN DIBERI WARNA ABU TERANG AGAR ELEGAN */
+        .goog-te-gadget-simple .goog-te-menu-value span:last-child {
+            color: #94a3b8 !important; 
+            margin-left: 6px !important;
+        }
+
     </style>
 </head>
 <body class="text-slate-800">
 
     <div class="app-container">
 
-<!-- Header -->
-<header
-    class="relative bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500
-           text-white px-5 pt-5 pb-5 shadow-lg overflow-hidden shrink-0">
+    <!-- Header -->
+    <header
+        class="relative bg-slate-800 text-slate-100 px-4 py-4 shadow-lg overflow-hidden shrink-0">
 
-    <!-- Background decoration -->
-    <div class="absolute -top-10 -right-8 w-36 h-36 rounded-full bg-white/10 blur-3xl"></div>
-    <div class="absolute -bottom-8 -left-6 w-28 h-28 rounded-full bg-teal-300/10 blur-2xl"></div>
+        <div class="absolute -top-10 -right-8 w-36 h-36 rounded-full bg-slate-700/30 blur-3xl"></div>
+        <div class="absolute -bottom-8 -left-6 w-28 h-28 rounded-full bg-slate-700/30 blur-2xl"></div>
 
-    <div class="relative flex justify-between items-center">
+        <div class="relative flex justify-between items-center gap-2">
 
-        <!-- Logo -->
-        <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2.5 shrink">
+                
+                <div class="bg-slate-700/50 backdrop-blur-md rounded-xl p-2 shadow-inner ring-1 ring-white/10 shrink-0">
+                    <img src="favicon.svg" alt="GiziKita" class="w-7 h-7">
+                </div>
 
-            <div class="bg-white/15 backdrop-blur-md
-                        rounded-2xl p-2.5
-                        shadow-lg ring-1 ring-white/20">
-
-                <img
-                    src="favicon.svg"
-                    alt="GiziKita"
-                    class="w-8 h-8">
-            </div>
-
-            <div>
-
-                <h1 class="text-xl font-extrabold tracking-tight leading-none">
-                    GiziKita
-                </h1>
-
-                <p class="text-xs text-emerald-50 font-medium mt-0.5 opacity-90">
-                    Smart Nutrition Planner
-                </p>
+                <div class="min-w-0">
+                    <h1 class="text-lg font-bold tracking-tight leading-none text-white truncate">
+                        GiziKita
+                    </h1>
+                    <p class="text-[10px] font-medium mt-1 text-slate-400 truncate uppercase tracking-widest">
+                        Smart Nutrition
+                    </p>
+                </div>
 
             </div>
+
+        <div class="flex items-center gap-2 shrink-0">
+            
+            <div id="google_translate_element"></div>
+
+            <button
+                id="gps-status"
+                onclick="app.getLocation()"
+                class="flex items-center justify-center gap-1.5 px-3 h-[34px] rounded-lg bg-slate-700/50 hover:bg-slate-700 backdrop-blur-md border border-white/10 shadow-sm transition-all duration-200 active:scale-95">
+                <i class="ph ph-map-pin text-sm text-slate-300"></i>
+                <span class="text-[10px] font-semibold text-slate-300 hidden min-[380px]:inline-block uppercase tracking-wider">Set Lokasi</span>
+            </button>
 
         </div>
 
-        <!-- GPS -->
-        <button
-            id="gps-status"
-            onclick="app.getLocation()"
-            class="flex items-center gap-1.5
-                   px-4 py-2.5
-                   rounded-full
-                   bg-white/15
-                   hover:bg-white/25
-                   backdrop-blur-md
-                   border border-white/10
-                   shadow-md
-                   transition-all duration-200
-                   active:scale-95">
-
-            <i class="ph ph-map-pin text-base"></i>
-
-            <span class="text-xs font-semibold">
-                Set Lokasi
-            </span>
-
-        </button>
-
-    </div>
-
-</header>
+        </div>
+    </header>
 
         <!-- Main Content -->
         <main id="main-content" class="flex-1 px-4 py-5 overflow-y-auto relative"></main>
@@ -411,32 +444,32 @@
                 age: '', weight: '', height: '', budget: '',
                 lat: null, lng: null, locationName: 'Belum diatur'
             },
-            // Nutrisi per 100g => p:protein(g) a:vitA(mcg) z:zinc(mg) fe:iron(mg) cal:kkal
+           // Nutrisi per 100g => cal:kkal, p:protein(g), f:lemak(g), c:karbohidrat(g), a:vitA(mcg), z:zinc(mg), fe:zat besi(mg), ca:kalsium(mg), vitc:vitC(mg)
             market: [
-                { id: 'beras',    name: 'Beras Putih',      unit: '1 kg',           price: 15000, qty_g: 1000, cat: 'karbo',           nut: { p: 8.4,  a: 0,    z: 1.1, fe: 1.2, cal: 360 } },
-                { id: 'singkong', name: 'Singkong',         unit: '1 kg',           price: 6000,  qty_g: 1000, cat: 'karbo',           nut: { p: 1.4,  a: 1,    z: 0.3, fe: 0.3, cal: 160 } },
-                { id: 'ubi',      name: 'Ubi Jalar',        unit: '1 kg',           price: 8000,  qty_g: 1000, cat: 'karbo',           nut: { p: 1.6,  a: 709,  z: 0.3, fe: 0.6, cal: 86  } },
-                { id: 'jagung',   name: 'Jagung Manis',     unit: '1 kg',           price: 9000,  qty_g: 1000, cat: 'karbo',           nut: { p: 3.3,  a: 10,   z: 0.5, fe: 0.5, cal: 86  } },
-                { id: 'kentang',  name: 'Kentang',          unit: '1 kg',           price: 14000, qty_g: 1000, cat: 'karbo',           nut: { p: 2.0,  a: 0,    z: 0.3, fe: 0.8, cal: 77  } },
-                { id: 'tempe',    name: 'Tempe Kedelai',    unit: 'Papan (250g)',   price: 5000,  qty_g: 250,  cat: 'protein_nabati',  nut: { p: 19,   a: 0,    z: 1.8, fe: 2.7, cal: 192 } },
-                { id: 'tahu',     name: 'Tahu Putih',       unit: 'Bungkus (300g)', price: 4000,  qty_g: 300,  cat: 'protein_nabati',  nut: { p: 8,    a: 0,    z: 0.8, fe: 1.5, cal: 76  } },
-                { id: 'kchijau',  name: 'Kacang Hijau',     unit: '500 g',          price: 12000, qty_g: 500,  cat: 'protein_nabati',  nut: { p: 22,   a: 0,    z: 2.7, fe: 6.7, cal: 347 } },
-                { id: 'telur',    name: 'Telur Ayam',       unit: '1 kg (16 btr)',  price: 28000, qty_g: 1000, cat: 'protein_hewani',  nut: { p: 12.6, a: 160,  z: 1.3, fe: 1.2, cal: 155 } },
-                { id: 'lele',     name: 'Ikan Lele Segar',  unit: '1 kg',           price: 26000, qty_g: 1000, cat: 'protein_hewani',  nut: { p: 18,   a: 50,   z: 1.1, fe: 1.0, cal: 105 } },
-                { id: 'kembung',  name: 'Ikan Kembung',     unit: '1 kg',           price: 35000, qty_g: 1000, cat: 'protein_hewani',  nut: { p: 21,   a: 30,   z: 0.8, fe: 1.5, cal: 112 } },
-                { id: 'teri',     name: 'Ikan Teri Kering', unit: '250 g',          price: 18000, qty_g: 250,  cat: 'protein_hewani',  nut: { p: 33,   a: 30,   z: 1.7, fe: 3.0, cal: 170 } },
-                { id: 'ayam',     name: 'Daging Ayam',      unit: '1 kg',           price: 38000, qty_g: 1000, cat: 'protein_hewani',  nut: { p: 18,   a: 30,   z: 1.0, fe: 0.7, cal: 215 } },
-                { id: 'hati',     name: 'Hati Ayam',        unit: '500 g',          price: 16000, qty_g: 500,  cat: 'protein_hewani',  nut: { p: 27,   a: 3300, z: 4.0, fe: 9.0, cal: 165 } },
-                { id: 'kelor',    name: 'Daun Kelor',       unit: 'Ikat (100g)',    price: 2000,  qty_g: 100,  cat: 'sayur',           nut: { p: 6.7,  a: 678,  z: 0.6, fe: 4.0, cal: 64  } },
-                { id: 'bayam',    name: 'Bayam',            unit: 'Ikat (200g)',    price: 3000,  qty_g: 200,  cat: 'sayur',           nut: { p: 2.9,  a: 469,  z: 0.5, fe: 2.7, cal: 23  } },
-                { id: 'wortel',   name: 'Wortel',           unit: '500 g',          price: 7000,  qty_g: 500,  cat: 'sayur',           nut: { p: 1.0,  a: 835,  z: 0.2, fe: 0.3, cal: 41  } },
-                { id: 'kangkung', name: 'Kangkung',         unit: 'Ikat (200g)',    price: 2500,  qty_g: 200,  cat: 'sayur',           nut: { p: 2.6,  a: 315,  z: 0.4, fe: 2.5, cal: 19  } },
-                { id: 'brokoli',  name: 'Brokoli',          unit: '250 g',          price: 9000,  qty_g: 250,  cat: 'sayur',           nut: { p: 2.8,  a: 31,   z: 0.4, fe: 0.7, cal: 34  } },
-                { id: 'pisang',   name: 'Pisang',           unit: '1 sisir (1kg)',  price: 18000, qty_g: 1000, cat: 'buah',            nut: { p: 1.1,  a: 3,    z: 0.15,fe: 0.3, cal: 89  } },
-                { id: 'pepaya',   name: 'Pepaya',           unit: '1 buah (1kg)',   price: 10000, qty_g: 1000, cat: 'buah',            nut: { p: 0.5,  a: 47,   z: 0.1, fe: 0.3, cal: 43  } },
-                { id: 'jeruk',    name: 'Jeruk',            unit: '1 kg',           price: 20000, qty_g: 1000, cat: 'buah',            nut: { p: 0.9,  a: 11,   z: 0.1, fe: 0.1, cal: 47  } },
-                { id: 'susu',     name: 'Susu UHT',         unit: '1 Liter',        price: 19000, qty_g: 1000, cat: 'susu',            nut: { p: 3.2,  a: 46,   z: 0.4, fe: 0.03,cal: 61  } },
-                { id: 'minyak',   name: 'Minyak Goreng',    unit: '1 Liter',        price: 16000, qty_g: 900,  cat: 'lemak',           nut: { p: 0,    a: 0,    z: 0,   fe: 0,   cal: 884 } }
+                { id: 'beras',    name: 'Beras Putih',      unit: '1 kg',           price: 15000, qty_g: 1000, cat: 'karbo',           nut: { cal: 360, p: 8.4,  f: 1.7,  c: 77.1, a: 0,    z: 1.1,  fe: 1.2, ca: 3,    vitc: 0 } },
+                { id: 'singkong', name: 'Singkong',         unit: '1 kg',           price: 6000,  qty_g: 1000, cat: 'karbo',           nut: { cal: 160, p: 1.4,  f: 0.3,  c: 38.0, a: 1,    z: 0.3,  fe: 0.3, ca: 33,   vitc: 30 } },
+                { id: 'ubi',      name: 'Ubi Jalar',        unit: '1 kg',           price: 8000,  qty_g: 1000, cat: 'karbo',           nut: { cal: 86,  p: 1.6,  f: 0.1,  c: 20.1, a: 709,  z: 0.3,  fe: 0.6, ca: 30,   vitc: 2.4 } },
+                { id: 'jagung',   name: 'Jagung Manis',     unit: '1 kg',           price: 9000,  qty_g: 1000, cat: 'karbo',           nut: { cal: 86,  p: 3.3,  f: 1.4,  c: 18.7, a: 10,   z: 0.5,  fe: 0.5, ca: 2,    vitc: 6.8 } },
+                { id: 'kentang',  name: 'Kentang',          unit: '1 kg',           price: 14000, qty_g: 1000, cat: 'karbo',           nut: { cal: 77,  p: 2.0,  f: 0.1,  c: 17.5, a: 0,    z: 0.3,  fe: 0.8, ca: 12,   vitc: 19.7 } },
+                { id: 'tempe',    name: 'Tempe Kedelai',    unit: 'Papan (250g)',   price: 5000,  qty_g: 250,  cat: 'protein_nabati',  nut: { cal: 192, p: 19.0, f: 10.8, c: 7.6,  a: 0,    z: 1.8,  fe: 2.7, ca: 111,  vitc: 0 } },
+                { id: 'tahu',     name: 'Tahu Putih',       unit: 'Bungkus (300g)', price: 4000,  qty_g: 300,  cat: 'protein_nabati',  nut: { cal: 76,  p: 8.0,  f: 4.8,  c: 1.9,  a: 0,    z: 0.8,  fe: 1.5, ca: 223,  vitc: 0.1 } },
+                { id: 'kchijau',  name: 'Kacang Hijau',     unit: '500 g',          price: 12000, qty_g: 500,  cat: 'protein_nabati',  nut: { cal: 347, p: 22.0, f: 1.2,  c: 62.9, a: 0,    z: 2.7,  fe: 6.7, ca: 125,  vitc: 3 } },
+                { id: 'telur',    name: 'Telur Ayam',       unit: '1 kg (16 btr)',  price: 28000, qty_g: 1000, cat: 'protein_hewani',  nut: { cal: 155, p: 12.6, f: 10.6, c: 1.1,  a: 160,  z: 1.3,  fe: 1.2, ca: 50,   vitc: 0 } },
+                { id: 'lele',     name: 'Ikan Lele Segar',  unit: '1 kg',           price: 26000, qty_g: 1000, cat: 'protein_hewani',  nut: { cal: 105, p: 18.0, f: 2.9,  c: 0,    a: 50,   z: 1.1,  fe: 1.0, ca: 14,   vitc: 0 } },
+                { id: 'kembung',  name: 'Ikan Kembung',     unit: '1 kg',           price: 35000, qty_g: 1000, cat: 'protein_hewani',  nut: { cal: 112, p: 21.0, f: 2.3,  c: 0,    a: 30,   z: 0.8,  fe: 1.5, ca: 20,   vitc: 0 } },
+                { id: 'teri',     name: 'Ikan Teri Kering', unit: '250 g',          price: 18000, qty_g: 250,  cat: 'protein_hewani',  nut: { cal: 170, p: 33.0, f: 3.0,  c: 0,    a: 30,   z: 1.7,  fe: 3.0, ca: 1200, vitc: 0 } },
+                { id: 'ayam',     name: 'Daging Ayam',      unit: '1 kg',           price: 38000, qty_g: 1000, cat: 'protein_hewani',  nut: { cal: 215, p: 18.0, f: 15.0, c: 0,    a: 30,   z: 1.0,  fe: 0.7, ca: 14,   vitc: 0 } },
+                { id: 'hati',     name: 'Hati Ayam',        unit: '500 g',          price: 16000, qty_g: 500,  cat: 'protein_hewani',  nut: { cal: 165, p: 27.0, f: 5.0,  c: 1.0,  a: 3300, z: 4.0,  fe: 9.0, ca: 8,    vitc: 18 } },
+                { id: 'kelor',    name: 'Daun Kelor',       unit: 'Ikat (100g)',    price: 2000,  qty_g: 100,  cat: 'sayur',           nut: { cal: 64,  p: 6.7,  f: 1.7,  c: 14.3, a: 678,  z: 0.6,  fe: 4.0, ca: 440,  vitc: 220 } },
+                { id: 'bayam',    name: 'Bayam',            unit: 'Ikat (200g)',    price: 3000,  qty_g: 200,  cat: 'sayur',           nut: { cal: 23,  p: 2.9,  f: 0.4,  c: 3.6,  a: 469,  z: 0.5,  fe: 2.7, ca: 99,   vitc: 28 } },
+                { id: 'wortel',   name: 'Wortel',           unit: '500 g',          price: 7000,  qty_g: 500,  cat: 'sayur',           nut: { cal: 41,  p: 1.0,  f: 0.2,  c: 9.6,  a: 835,  z: 0.2,  fe: 0.3, ca: 33,   vitc: 5.9 } },
+                { id: 'kangkung', name: 'Kangkung',         unit: 'Ikat (200g)',    price: 2500,  qty_g: 200,  cat: 'sayur',           nut: { cal: 19,  p: 2.6,  f: 0.2,  c: 3.1,  a: 315,  z: 0.4,  fe: 2.5, ca: 73,   vitc: 32 } },
+                { id: 'brokoli',  name: 'Brokoli',          unit: '250 g',          price: 9000,  qty_g: 250,  cat: 'sayur',           nut: { cal: 34,  p: 2.8,  f: 0.4,  c: 6.6,  a: 31,   z: 0.4,  fe: 0.7, ca: 47,   vitc: 89 } },
+                { id: 'pisang',   name: 'Pisang',           unit: '1 sisir (1kg)',  price: 18000, qty_g: 1000, cat: 'buah',            nut: { cal: 89,  p: 1.1,  f: 0.3,  c: 22.8, a: 3,    z: 0.15, fe: 0.3, ca: 5,    vitc: 8.7 } },
+                { id: 'pepaya',   name: 'Pepaya',           unit: '1 buah (1kg)',   price: 10000, qty_g: 1000, cat: 'buah',            nut: { cal: 43,  p: 0.5,  f: 0.3,  c: 10.8, a: 47,   z: 0.1,  fe: 0.3, ca: 20,   vitc: 62 } },
+                { id: 'jeruk',    name: 'Jeruk',            unit: '1 kg',           price: 20000, qty_g: 1000, cat: 'buah',            nut: { cal: 47,  p: 0.9,  f: 0.1,  c: 11.8, a: 11,   z: 0.1,  fe: 0.1, ca: 40,   vitc: 53 } },
+                { id: 'susu',     name: 'Susu UHT',         unit: '1 Liter',        price: 19000, qty_g: 1000, cat: 'susu',            nut: { cal: 61,  p: 3.2,  f: 3.3,  c: 4.8,  a: 46,   z: 0.4,  fe: 0.03,ca: 113,  vitc: 0 } },
+                { id: 'minyak',   name: 'Minyak Goreng',    unit: '1 Liter',        price: 16000, qty_g: 900,  cat: 'lemak',           nut: { cal: 884, p: 0,    f: 100,  c: 0,    a: 0,    z: 0,    fe: 0,   ca: 0,    vitc: 0 } }
             ]
         });
 
@@ -723,7 +756,7 @@
                     price: price,
                     qty_g: 100, // Basis 100g
                     cat: cat,
-                    nut: { p: 5, a: 10, z: 0.5, fe: 1.0, cal: 100 } // Nutrisi estimasi dasar
+                    nut: { cal: 100, p: 5, f: 2, c: 10, a: 10, z: 0.5, fe: 1.0, ca: 10, vitc: 5 } // Nutrisi estimasi dasar
                 };
 
                 this.state.market.unshift(newItem); // Masukkan ke paling atas
@@ -740,14 +773,32 @@
 
             getTargetNutrition() {
                 const age = this.state.profile.age;
-                let target = { cal: 1000, p: 13, a: 400, z: 3, fe: 7 };
-                if (age > 36) target = { cal: 1400, p: 19, a: 450, z: 5, fe: 10 };
-                return target;
+                
+                // Standar Angka Kecukupan Gizi (AKG) Kemenkes RI Tahun 2019
+                // cal: Kalori(kkal), p: Protein(g), f: Lemak(g), c: Karbo(g)
+                // a: Vit A(mcg), z: Zinc(mg), fe: Zat Besi(mg), ca: Kalsium(mg), vitc: Vit C(mg)
+                
+                if (age < 6) {
+                    // 0 - 5 Bulan (Fase ASI Eksklusif)
+                    return { cal: 550, p: 9, f: 31, c: 59, a: 375, z: 1.5, fe: 0.3, ca: 200, vitc: 40 };
+                } 
+                else if (age >= 6 && age <= 11) {
+                    // 6 - 11 Bulan (Fase MPASI Awal) - Zat Besi butuh sangat tinggi!
+                    return { cal: 800, p: 15, f: 35, c: 105, a: 400, z: 3.0, fe: 11.0, ca: 270, vitc: 50 };
+                } 
+                else if (age >= 12 && age <= 36) {
+                    // 1 - 3 Tahun (Batita)
+                    return { cal: 1050, p: 20, f: 45, c: 215, a: 400, z: 3.0, fe: 7.0, ca: 650, vitc: 40 };
+                } 
+                else {
+                    // 4 - 6 Tahun (Prasekolah)
+                    return { cal: 1400, p: 25, f: 50, c: 220, a: 450, z: 5.0, fe: 10.0, ca: 1000, vitc: 45 };
+                }
             }
 
             calculateRecipeStats(recipe) {
                 let totalCost = 0;
-                let totalNut = { cal: 0, p: 0, a: 0, z: 0, fe: 0 };
+                let totalNut = { cal: 0, p: 0, f: 0, c: 0, a: 0, z: 0, fe: 0, ca: 0, vitc: 0 };
                 recipe.ingredients.forEach(ing => {
                     const m = this.state.market.find(x => x.id === ing.id);
                     if (m) {
@@ -755,9 +806,13 @@
                         const mul = ing.g / 100;
                         totalNut.cal += m.nut.cal * mul;
                         totalNut.p   += m.nut.p   * mul;
+                        totalNut.f   += (m.nut.f || 0) * mul;
+                        totalNut.c   += (m.nut.c || 0) * mul;
                         totalNut.a   += m.nut.a   * mul;
                         totalNut.z   += m.nut.z   * mul;
                         totalNut.fe  += m.nut.fe  * mul;
+                        totalNut.ca  += (m.nut.ca || 0) * mul;
+                        totalNut.vitc+= (m.nut.vitc || 0) * mul;
                     }
                 });
                 return { cost: totalCost, nut: totalNut };
@@ -788,27 +843,35 @@
                             const totalCost = r1.cost + r2.cost + r3.cost;
                             if (totalCost <= budget) {
                                 const tP = r1.nut.p+r2.nut.p+r3.nut.p;
+                                const tF = r1.nut.f+r2.nut.f+r3.nut.f;
+                                const tC = r1.nut.c+r2.nut.c+r3.nut.c;
                                 const tFe= r1.nut.fe+r2.nut.fe+r3.nut.fe;
                                 const tZ = r1.nut.z+r2.nut.z+r3.nut.z;
                                 const tA = r1.nut.a+r2.nut.a+r3.nut.a;
+                                const tCa= r1.nut.ca+r2.nut.ca+r3.nut.ca;
+                                const tVitC= r1.nut.vitc+r2.nut.vitc+r3.nut.vitc;
+                                
+                                // Prioritas AI tetap pada Protein, Zinc, Zat Besi, Vit A (fokus Stunting)
                                 const score = Math.min(tP/targetNut.p,1)*40 + Math.min(tZ/targetNut.z,1)*30 +
                                               Math.min(tFe/targetNut.fe,1)*20 + Math.min(tA/targetNut.a,1)*10;
+                                
                                 if (score > bestScore) {
                                     bestScore = score;
                                     bestMenu = [r1,r2,r3];
                                     bestStats = { cost: totalCost, nut: {
-                                        cal: r1.nut.cal+r2.nut.cal+r3.nut.cal, p:tP, a:tA, z:tZ, fe:tFe } };
+                                        cal: r1.nut.cal+r2.nut.cal+r3.nut.cal, p:tP, f:tF, c:tC, a:tA, z:tZ, fe:tFe, ca:tCa, vitc:tVitC } };
                                 }
                             }
                         }
 
+                // Jika anggaran terlalu kecil, AI ambil menu termurah sebisa mungkin
                 if (!bestMenu) {
                     const sorted = [...analyzed].sort((a,b)=>a.cost-b.cost);
-                    let menu=[], cost=0, nut={cal:0,p:0,a:0,z:0,fe:0};
+                    let menu=[], cost=0, nut={cal:0,p:0,f:0,c:0,a:0,z:0,fe:0,ca:0,vitc:0};
                     for (const r of sorted) {
                         if (cost + r.cost <= budget) {
                             menu.push(r); cost += r.cost;
-                            nut.p+=r.nut.p; nut.a+=r.nut.a; nut.z+=r.nut.z; nut.fe+=r.nut.fe; nut.cal+=r.nut.cal;
+                            nut.p+=r.nut.p; nut.f+=r.nut.f; nut.c+=r.nut.c; nut.a+=r.nut.a; nut.z+=r.nut.z; nut.fe+=r.nut.fe; nut.ca+=r.nut.ca; nut.vitc+=r.nut.vitc; nut.cal+=r.nut.cal;
                         }
                     }
                     if (menu.length) { bestMenu = menu; bestStats = { cost, nut }; }
@@ -871,13 +934,19 @@
 
                     <div class="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm animate-pop">
                         <h3 class="font-bold text-slate-800 mb-4 text-sm">Pemenuhan Target Gizi</h3>
+
                         <div id="nutrition-bars" class="space-y-4">
                             ${bar('Protein', stats.nut.p, target.p, 'g', 'bg-emerald-500')}
+                            ${bar('Lemak', stats.nut.f, target.f, 'g', 'bg-yellow-400')}
+                            ${bar('Karbohidrat', stats.nut.c, target.c, 'g', 'bg-orange-400')}
                             ${bar('Zinc', stats.nut.z, target.z, 'mg', 'bg-blue-500')}
                             ${bar('Zat Besi', stats.nut.fe, target.fe, 'mg', 'bg-red-500')}
+                            ${bar('Kalsium', stats.nut.ca, target.ca, 'mg', 'bg-indigo-400')}
                             ${bar('Vitamin A', stats.nut.a, target.a, 'mcg', 'bg-amber-500')}
+                            ${bar('Vitamin C', stats.nut.vitc, target.vitc, 'mg', 'bg-lime-500')}
                             ${bar('Kalori', stats.nut.cal, target.cal, 'kcal', 'bg-slate-400')}
                         </div>
+
                     </div>
 
                     <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 shadow-sm animate-pop">
@@ -1001,13 +1070,18 @@
                 }
                 this.showToast("Memproses dokumen PDF...");
                 const container = document.createElement('div');
-                container.style.cssText = 'padding:30px;font-family:Inter,sans-serif;color:#1f2937;';
+                // Hapus padding:30px agar tidak dobel dengan margin html2pdf
+                container.style.cssText = 'font-family:Inter,sans-serif;color:#1f2937;';
                 
-                // Urutan waktu makan
                 const times = ['Sarapan', 'Makan Siang', 'Makan Malam', 'Selingan'];
                 
+                // 1. STYLE, HEADER, & PROFIL
                 let html = `
-                    <div style="border-bottom:2px solid #059669;padding-bottom:10px;margin-bottom:20px;">
+                    <style>
+                        tr, li { page-break-inside: avoid !important; }
+                    </style>
+                    
+                    <div style="border-bottom:2px solid #059669;padding-bottom:10px;margin-bottom:15px;">
                         <h1 style="color:#059669;margin:0;font-size:24px;">Laporan Rekomendasi GiziKita</h1>
                         <p style="margin:5px 0 0;color:#6b7280;font-size:14px;">Sistem Pendukung Keputusan Gizi Posyandu</p>
                     </div>
@@ -1017,11 +1091,35 @@
                         <p style="margin:5px 0;font-size:14px;"><strong>Umur:</strong> ${this.state.profile.age} Bulan | <strong>Berat:</strong> ${this.state.profile.weight} kg | <strong>Tinggi:</strong> ${this.state.profile.height} cm</p>
                         <p style="margin:5px 0;font-size:14px;"><strong>Anggaran Harian:</strong> ${this.formatIDR(this.state.profile.budget)}</p>
                     </div>
-                    
+                `;
+
+                // 2. TABEL GIZI (Dinaikkan ke atas)
+                html += `
+                    <h3 style="font-size:16px;border-bottom:1px solid #e5e7eb;padding-bottom:5px;">Capaian Target Gizi</h3>
+                    <table style="width:100%;border-collapse:collapse;font-size:13px;text-align:left;margin-bottom:25px;">
+                        <tr style="background:#f3f4f6;">
+                            <th style="padding:8px;border:1px solid #d1d5db;">Nutrisi</th>
+                            <th style="padding:8px;border:1px solid #d1d5db;">Capaian AI</th>
+                            <th style="padding:8px;border:1px solid #d1d5db;">Kebutuhan Harian (AKG)</th>
+                        </tr>
+                        <tr><td style="padding:8px;border:1px solid #d1d5db;">Kalori</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.cal.toFixed(0)} kcal</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.cal} kcal</td></tr>
+                        <tr><td style="padding:8px;border:1px solid #d1d5db;">Protein</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.p.toFixed(1)} g</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.p} g</td></tr>
+                        <tr><td style="padding:8px;border:1px solid #d1d5db;">Lemak</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.f.toFixed(1)} g</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.f} g</td></tr>
+                        <tr><td style="padding:8px;border:1px solid #d1d5db;">Karbohidrat</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.c.toFixed(1)} g</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.c} g</td></tr>
+                        <tr><td style="padding:8px;border:1px solid #d1d5db;">Zinc</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.z.toFixed(1)} mg</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.z} mg</td></tr>
+                        <tr><td style="padding:8px;border:1px solid #d1d5db;">Zat Besi (Fe)</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.fe.toFixed(1)} mg</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.fe} mg</td></tr>
+                        <tr><td style="padding:8px;border:1px solid #d1d5db;">Kalsium</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.ca.toFixed(0)} mg</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.ca} mg</td></tr>
+                        <tr><td style="padding:8px;border:1px solid #d1d5db;">Vitamin A</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.a.toFixed(0)} mcg</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.a} mcg</td></tr>
+                        <tr><td style="padding:8px;border:1px solid #d1d5db;">Vitamin C</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.vitc.toFixed(1)} mg</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.vitc} mg</td></tr>
+                    </table>
+                `;
+
+                // 3. REKOMENDASI MENU (Ditaruh di bawah agar mengalir ke halaman berikutnya)
+                html += `
                     <h3 style="font-size:16px;border-bottom:1px solid #e5e7eb;padding-bottom:5px;">Rekomendasi Menu Harian (Total: ${this.formatIDR(this.lastGeneratedStats.cost)})</h3>
-                    <ul style="list-style:none; padding-left:0; margin-bottom:20px;">`;
+                    <ul style="list-style:none; padding-left:0; margin-bottom:20px;">
+                `;
                 
-                // Looping menu beserta keterangan waktu makan (Sarapan, Siang, dll)
                 this.lastGeneratedMenu.forEach((m, i) => {
                     html += `
                         <li style="margin-bottom:12px; font-size:14px; background:#f9fafb; padding:10px; border-left:4px solid #059669; border-radius:4px;">
@@ -1032,30 +1130,20 @@
                         </li>`;
                 });
                 
-                // Tabel Gizi yang jauh lebih lengkap
                 html += `</ul>
-                    <h3 style="font-size:16px;border-bottom:1px solid #e5e7eb;padding-bottom:5px;">Capaian Target Gizi</h3>
-                    <table style="width:100%;border-collapse:collapse;font-size:13px;text-align:left;">
-                        <tr style="background:#f3f4f6;">
-                            <th style="padding:8px;border:1px solid #d1d5db;">Nutrisi</th>
-                            <th style="padding:8px;border:1px solid #d1d5db;">Capaian AI</th>
-                            <th style="padding:8px;border:1px solid #d1d5db;">Kebutuhan Harian</th>
-                        </tr>
-                        <tr><td style="padding:8px;border:1px solid #d1d5db;">Kalori</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.cal.toFixed(0)} kcal</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.cal} kcal</td></tr>
-                        <tr><td style="padding:8px;border:1px solid #d1d5db;">Protein</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.p.toFixed(1)} g</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.p} g</td></tr>
-                        <tr><td style="padding:8px;border:1px solid #d1d5db;">Zinc</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.z.toFixed(1)} mg</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.z} mg</td></tr>
-                        <tr><td style="padding:8px;border:1px solid #d1d5db;">Zat Besi (Fe)</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.fe.toFixed(1)} mg</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.fe} mg</td></tr>
-                        <tr><td style="padding:8px;border:1px solid #d1d5db;">Vitamin A</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.a.toFixed(0)} mcg</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.a} mcg</td></tr>
-                    </table>
-                    <p style="margin-top:30px;font-size:10px;color:#9ca3af;text-align:center;">Dihasilkan oleh AI GiziKita - Aplikasi Bekerja Secara Offline</p>`;
-                
+                    <p style="margin-top:20px;font-size:10px;color:#9ca3af;text-align:center;">Dihasilkan oleh AI GiziKita - Aplikasi Bekerja Secara Offline</p>
+                `;
+
                 container.innerHTML = html;
+                
+                // Perbaikan margin: [atas, kiri, bawah, kanan]. Atas dikurangi dari 0.5 jadi 0.2 inci.
                 html2pdf().set({
-                    margin: 0.5, 
+                    margin: [0.2, 0.4, 0.4, 0.4], 
                     filename: `Laporan_GiziKita_${this.state.profile.age}bln.pdf`,
-                    image: { type:'jpeg', quality:0.98 }, 
-                    html2canvas:{ scale:2 },
-                    jsPDF: { unit:'in', format:'a4', orientation:'portrait' }
+                    image: { type:'jpeg', quality:1 }, 
+                    html2canvas:{ scale:2, useCORS: true },
+                    jsPDF: { unit:'in', format:'a4', orientation:'portrait' },
+                    pagebreak: { mode: ['css', 'legacy'] }
                 }).from(container).save();
             }
 
@@ -1083,5 +1171,20 @@
         }
 
     </script>
+
+    <!-- Script Google Translate -->
+
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,fr,es,ar,ru,zh-CN,sw,id',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+    }
+    </script>
+
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 </body>
 </html>
