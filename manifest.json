@@ -34,5 +34,13 @@
     "standalone",
     "minimal-ui",
     "browser"
-  ]
+  ],
+  "screenshots" : [
+  {
+    "src": "thumbnail.jpeg",
+    "sizes": "501x871",
+    "type": "image/jpeg",
+    "platform": "portrait",
+  }
+]
 }
