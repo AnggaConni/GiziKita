@@ -146,23 +146,71 @@
 <body class="text-slate-800">
 
     <div class="app-container">
-        <!-- Header -->
-        <header class="bg-gradient-to-br from-emerald-600 to-teal-600 text-white px-5 pt-5 pb-5 z-10 shadow-lg shrink-0">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center gap-2.5">
-                    <div class="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
-                        <i class="ph-fill ph-leaf text-2xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-lg font-extrabold tracking-tight leading-none">GiziDesa</h1>
-                        <p class="text-[11px] text-emerald-100">Nutrition Decision Support</p>
-                    </div>
-                </div>
-                <button id="gps-status" class="flex items-center text-xs bg-white/15 hover:bg-white/25 transition px-3 py-2 rounded-full backdrop-blur-sm" onclick="app.getLocation()">
-                    <i class="ph ph-map-pin mr-1.5 text-base"></i> <span>Set Lokasi</span>
-                </button>
+
+<!-- Header -->
+<header
+    class="relative bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500
+           text-white px-5 pt-5 pb-5 shadow-lg overflow-hidden shrink-0">
+
+    <!-- Background decoration -->
+    <div class="absolute -top-10 -right-8 w-36 h-36 rounded-full bg-white/10 blur-3xl"></div>
+    <div class="absolute -bottom-8 -left-6 w-28 h-28 rounded-full bg-teal-300/10 blur-2xl"></div>
+
+    <div class="relative flex justify-between items-center">
+
+        <!-- Logo -->
+        <div class="flex items-center gap-3">
+
+            <div class="bg-white/15 backdrop-blur-md
+                        rounded-2xl p-2.5
+                        shadow-lg ring-1 ring-white/20">
+
+                <img
+                    src="favicon.svg"
+                    alt="GiziKita"
+                    class="w-8 h-8">
             </div>
-        </header>
+
+            <div>
+
+                <h1 class="text-xl font-extrabold tracking-tight leading-none">
+                    GiziKita
+                </h1>
+
+                <p class="text-xs text-emerald-50 font-medium mt-0.5 opacity-90">
+                    Smart Nutrition Planner
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- GPS -->
+        <button
+            id="gps-status"
+            onclick="app.getLocation()"
+            class="flex items-center gap-1.5
+                   px-4 py-2.5
+                   rounded-full
+                   bg-white/15
+                   hover:bg-white/25
+                   backdrop-blur-md
+                   border border-white/10
+                   shadow-md
+                   transition-all duration-200
+                   active:scale-95">
+
+            <i class="ph ph-map-pin text-base"></i>
+
+            <span class="text-xs font-semibold">
+                Set Lokasi
+            </span>
+
+        </button>
+
+    </div>
+
+</header>
 
         <!-- Main Content -->
         <main id="main-content" class="flex-1 px-4 py-5 overflow-y-auto relative"></main>
