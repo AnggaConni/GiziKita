@@ -1187,50 +1187,41 @@
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        // Script untuk menyingkat teks tombol Google Translate secara dinamis
-        window.addEventListener('load', () => {
-            const gTranslateEl = document.getElementById('google_translate_element');
-            if (!gTranslateEl) return;
+        // Menggunakan setInterval karena Google Translate memuat scriptnya secara menyusul
+        // dan sering me-reset DOM secara otomatis. Script ini akan terus memantau.
+        setInterval(() => {
+            // Cari elemen teks pertama di dalam tombol translate
+            const textSpan = document.querySelector('.goog-te-menu-value span:first-child');
+            if (!textSpan) return; // Jika belum dirender Google, diamkan
 
-            const observer = new MutationObserver(() => {
-                const textSpan = gTranslateEl.querySelector('.goog-te-menu-value span:first-child');
-                if (!textSpan) return;
-                
-                const originalText = textSpan.textContent.toLowerCase().trim();
-                let newText = textSpan.textContent; // Default bawaan
+            const text = textSpan.textContent.toLowerCase().trim();
 
-                // Logika pemotongan kata sesuai bahasa
-                if (originalText.includes('pilih') || originalText.includes('indonesia') || originalText === 'bahasa') {
-                    newText = 'Bahasa';
-                } else if (originalText.includes('select') || originalText.includes('english') || originalText.includes('inggris') || originalText === 'lang') {
-                    newText = 'Lang';
-                } else if (originalText.includes('idioma') || originalText.includes('spanish') || originalText.includes('spanyol') || originalText === 'esp') {
-                    newText = 'Esp';
-                } else if (originalText.includes('langue') || originalText.includes('french') || originalText.includes('prancis') || originalText === 'fra') {
-                    newText = 'Fra';
-                } else if (originalText.includes('arabic') || originalText.includes('arab')) {
-                    newText = 'عربي';
-                } else if (originalText.includes('russian') || originalText.includes('rusia')) {
-                    newText = 'Рус';
-                } else if (originalText.includes('chinese') || originalText.includes('mandarin')) {
-                    newText = '中文';
-                } else if (originalText.includes('swahili')) {
-                    newText = 'Swa';
-                } else if (originalText.split(' ').length > 1) {
-                    // Fallback: Jika bahasa lain punya banyak kata, ambil kata pertamanya saja (Misal "Select..." jadi "Select")
-                    newText = originalText.split(' ')[0];
-                    newText = newText.charAt(0).toUpperCase() + newText.slice(1);
-                }
+            // Kumpulan kata yang SUDAH disingkat (agar script tidak bekerja berulang-ulang tanpa henti)
+            const shortWords = ['bahasa', 'lang', 'esp', 'fra', 'عربي', 'рус', '中文', 'swa'];
+            if (shortWords.includes(text)) return;
 
-                // Ganti teks jika berbeda (untuk mencegah infinite loop)
-                if (textSpan.textContent !== newText) {
-                    textSpan.textContent = newText;
-                }
-            });
-
-            // Awasi elemen secara real-time
-            observer.observe(gTranslateEl, { childList: true, subtree: true, characterData: true });
-        });
+            // Proses penyingkatan paksa
+            if (text.includes('pilih') || text.includes('indonesia')) {
+                textSpan.textContent = 'Bahasa';
+            } else if (text.includes('select') || text.includes('english') || text.includes('inggris')) {
+                textSpan.textContent = 'Lang';
+            } else if (text.includes('spanish') || text.includes('spanyol') || text.includes('idioma')) {
+                textSpan.textContent = 'Esp';
+            } else if (text.includes('french') || text.includes('prancis') || text.includes('langue')) {
+                textSpan.textContent = 'Fra';
+            } else if (text.includes('arabic') || text.includes('arab')) {
+                textSpan.textContent = 'عربي';
+            } else if (text.includes('russian') || text.includes('rusia')) {
+                textSpan.textContent = 'Рус';
+            } else if (text.includes('chinese') || text.includes('mandarin')) {
+                textSpan.textContent = '中文';
+            } else if (text.includes('swahili')) {
+                textSpan.textContent = 'Swa';
+            } else if (text.length > 5) {
+                // Jika ada bahasa lain yang kepanjangan, potong otomatis jadi 3 huruf saja (Misal: "Deutsch" jadi "Deu")
+                textSpan.textContent = text.charAt(0).toUpperCase() + text.slice(1, 3);
+            }
+        }, 100); // Kecepatan cek: 100 milidetik (Sangat cepat sehingga transisinya tidak terlihat oleh mata)
     </script>
 
 </body>
