@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>GiziDesa - AI Nutrition Planner</title>
-
-    <title>GiziKita - AI Nutrition Planner untuk Balita, Posyandu & Pencegahan Stunting</title>
+  
+    <title>GiziKita - Smart Nutrition Planner untuk Balita, Posyandu & Pencegahan Stunting</title>
 
     <meta name="description"
     content="GiziKita membantu kader Posyandu dan orang tua menyusun menu bergizi berdasarkan harga pasar lokal, kebutuhan nutrisi balita, dan anggaran harian. Berfungsi sepenuhnya secara offline.">
@@ -1003,35 +1002,59 @@
                 this.showToast("Memproses dokumen PDF...");
                 const container = document.createElement('div');
                 container.style.cssText = 'padding:30px;font-family:Inter,sans-serif;color:#1f2937;';
+                
+                // Urutan waktu makan
+                const times = ['Sarapan', 'Makan Siang', 'Makan Malam', 'Selingan'];
+                
                 let html = `
                     <div style="border-bottom:2px solid #059669;padding-bottom:10px;margin-bottom:20px;">
-                        <h1 style="color:#059669;margin:0;font-size:24px;">Laporan Intervensi GiziDesa</h1>
-                        <p style="margin:5px 0 0;color:#6b7280;font-size:14px;">Nutrition Decision Support System</p>
+                        <h1 style="color:#059669;margin:0;font-size:24px;">Laporan Rekomendasi GiziKita</h1>
+                        <p style="margin:5px 0 0;color:#6b7280;font-size:14px;">Sistem Pendukung Keputusan Gizi Posyandu</p>
                     </div>
+                    
                     <div style="margin-bottom:20px;background:#f3f4f6;padding:15px;border-radius:8px;">
-                        <h3 style="margin-top:0;font-size:16px;">Profil Sasaran</h3>
+                        <h3 style="margin-top:0;font-size:16px;">Profil Balita</h3>
                         <p style="margin:5px 0;font-size:14px;"><strong>Umur:</strong> ${this.state.profile.age} Bulan | <strong>Berat:</strong> ${this.state.profile.weight} kg | <strong>Tinggi:</strong> ${this.state.profile.height} cm</p>
                         <p style="margin:5px 0;font-size:14px;"><strong>Anggaran Harian:</strong> ${this.formatIDR(this.state.profile.budget)}</p>
                     </div>
-                    <h3 style="font-size:16px;border-bottom:1px solid #e5e7eb;padding-bottom:5px;">Rekomendasi Menu AI (Total: ${this.formatIDR(this.lastGeneratedStats.cost)})</h3>
-                    <ul style="padding-left:20px;margin-bottom:20px;">`;
-                this.lastGeneratedMenu.forEach(m => {
-                    html += `<li style="margin-bottom:10px;font-size:14px;"><strong>${m.name}</strong><br>
-                        <span style="color:#4b5563;font-size:12px;">Estimasi: ${this.formatIDR(m.cost)} | Tips: ${m.tips}</span></li>`;
+                    
+                    <h3 style="font-size:16px;border-bottom:1px solid #e5e7eb;padding-bottom:5px;">Rekomendasi Menu Harian (Total: ${this.formatIDR(this.lastGeneratedStats.cost)})</h3>
+                    <ul style="list-style:none; padding-left:0; margin-bottom:20px;">`;
+                
+                // Looping menu beserta keterangan waktu makan (Sarapan, Siang, dll)
+                this.lastGeneratedMenu.forEach((m, i) => {
+                    html += `
+                        <li style="margin-bottom:12px; font-size:14px; background:#f9fafb; padding:10px; border-left:4px solid #059669; border-radius:4px;">
+                            <strong style="color:#059669; font-size:12px; text-transform:uppercase;">${times[i] || 'Selingan'}</strong><br>
+                            <strong style="font-size:15px;">${m.name}</strong><br>
+                            <span style="color:#4b5563;font-size:12px;">Estimasi Biaya: ${this.formatIDR(m.cost)}</span><br>
+                            <span style="color:#6b7280;font-size:12px;"><em>Tips Edukasi: ${m.tips}</em></span>
+                        </li>`;
                 });
+                
+                // Tabel Gizi yang jauh lebih lengkap
                 html += `</ul>
-                    <h3 style="font-size:16px;border-bottom:1px solid #e5e7eb;padding-bottom:5px;">Capaian Gizi</h3>
-                    <table style="width:100%;border-collapse:collapse;font-size:14px;text-align:left;">
-                        <tr><th style="padding:8px;border:1px solid #d1d5db;">Nutrisi</th><th style="padding:8px;border:1px solid #d1d5db;">Capaian</th><th style="padding:8px;border:1px solid #d1d5db;">Target</th></tr>
+                    <h3 style="font-size:16px;border-bottom:1px solid #e5e7eb;padding-bottom:5px;">Capaian Target Gizi</h3>
+                    <table style="width:100%;border-collapse:collapse;font-size:13px;text-align:left;">
+                        <tr style="background:#f3f4f6;">
+                            <th style="padding:8px;border:1px solid #d1d5db;">Nutrisi</th>
+                            <th style="padding:8px;border:1px solid #d1d5db;">Capaian AI</th>
+                            <th style="padding:8px;border:1px solid #d1d5db;">Kebutuhan Harian</th>
+                        </tr>
+                        <tr><td style="padding:8px;border:1px solid #d1d5db;">Kalori</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.cal.toFixed(0)} kcal</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.cal} kcal</td></tr>
                         <tr><td style="padding:8px;border:1px solid #d1d5db;">Protein</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.p.toFixed(1)} g</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.p} g</td></tr>
                         <tr><td style="padding:8px;border:1px solid #d1d5db;">Zinc</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.z.toFixed(1)} mg</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.z} mg</td></tr>
-                        <tr><td style="padding:8px;border:1px solid #d1d5db;">Zat Besi</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.fe.toFixed(1)} mg</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.fe} mg</td></tr>
+                        <tr><td style="padding:8px;border:1px solid #d1d5db;">Zat Besi (Fe)</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.fe.toFixed(1)} mg</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.fe} mg</td></tr>
+                        <tr><td style="padding:8px;border:1px solid #d1d5db;">Vitamin A</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastGeneratedStats.nut.a.toFixed(0)} mcg</td><td style="padding:8px;border:1px solid #d1d5db;">${this.lastTargetNut.a} mcg</td></tr>
                     </table>
-                    <p style="margin-top:30px;font-size:10px;color:#9ca3af;text-align:center;">Dihasilkan oleh AI GiziDesa - Tanpa Koneksi Internet</p>`;
+                    <p style="margin-top:30px;font-size:10px;color:#9ca3af;text-align:center;">Dihasilkan oleh AI GiziKita - Aplikasi Bekerja Secara Offline</p>`;
+                
                 container.innerHTML = html;
                 html2pdf().set({
-                    margin: 0.5, filename: 'Laporan_GiziDesa.pdf',
-                    image: { type:'jpeg', quality:0.98 }, html2canvas:{ scale:2 },
+                    margin: 0.5, 
+                    filename: `Laporan_GiziKita_${this.state.profile.age}bln.pdf`,
+                    image: { type:'jpeg', quality:0.98 }, 
+                    html2canvas:{ scale:2 },
                     jsPDF: { unit:'in', format:'a4', orientation:'portrait' }
                 }).from(container).save();
             }
