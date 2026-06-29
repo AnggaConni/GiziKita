@@ -59,9 +59,10 @@
 
     <link rel="canonical" href="https://anggaconni.github.io/GiziKita/">
 
-    <link rel="icon"
-    type="image/svg+xml"
-    href="favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <link rel="manifest" href="./manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
 
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -406,9 +407,9 @@
         const LOCAL_STORAGE_KEY = 'gizidesa_state_v2';
 
         const getInitialState = () => ({
-            history: [], // Tambahan untuk menyimpan riwayat
+            history: [], 
             profile: {
-                age: 24, weight: 11, height: 85, budget: 25000,
+                age: '', weight: '', height: '', budget: '',
                 lat: null, lng: null, locationName: 'Belum diatur'
             },
             // Nutrisi per 100g => p:protein(g) a:vitA(mcg) z:zinc(mg) fe:iron(mg) cal:kkal
@@ -578,7 +579,11 @@
             updateGPSUI() {
                 const el = document.getElementById('gps-status');
                 if (this.state.profile.lat) {
-                    el.innerHTML = `<i class="ph-fill ph-check-circle mr-1.5 text-base"></i> <span>Tersimpan</span>`;
+                    // Jika ada data GPS, tampilkan Tersimpan
+                    el.innerHTML = `<i class="ph-fill ph-check-circle text-base"></i> <span class="text-xs font-semibold">Tersimpan</span>`;
+                } else {
+                    // Jika kosong/direset, kembalikan ke Set Lokasi
+                    el.innerHTML = `<i class="ph ph-map-pin text-base"></i> <span class="text-xs font-semibold">Set Lokasi</span>`;
                 }
             }
 
@@ -1034,14 +1039,26 @@
             resetData() {
                 localStorage.removeItem(LOCAL_STORAGE_KEY);
                 this.state = getInitialState();
+                this.saveState();
                 this.marketFilter = 'all';
                 this.showToast("Semua data direset ke setelan awal.");
                 this.switchTab('profile');
+                this.updateGPSUI();
             }
         }
 
         let app;
         window.addEventListener('DOMContentLoaded', () => { app = new GiziDesaApp(); });
+
+                // TAMBAHKAN SCRIPT SERVICE WORKER INI
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then((reg) => console.log('Service Worker berhasil didaftarkan!'))
+                    .catch((err) => console.error('Service Worker gagal:', err));
+            });
+        }
+
     </script>
 </body>
 </html>
